@@ -1,0 +1,49 @@
+{
+  "Africa": [
+    "Hemisotidae",
+    "Okapia johnstoni",
+    "Tragelaphus eurycerus",
+    "Hexaprotodon liberiensis",
+    "Panthera leo"
+  ],
+  "Antarctica": [
+    "Phocidae gray",
+    "Leptonychotes weddellii",
+    "Berardius",
+    "Lobodon carcinophagus",
+    "Lagenorhynchus cruciger",
+    "Orcinus"
+  ],
+  "Asia": [
+    "Canis lupus pallipes",
+    "Sciurillus pusillus",
+    "Prionailurus Severtzov",
+    "Prionailurus Severtzov",
+    "Trachypithecus hatinhensis"
+  ],
+  "Australia": [
+    "Macropus agilis agilis",
+    "Notoryctes typhlops",
+    "Thylacinus cynocephalus",
+    "Ornithorhynchus anatinus",
+    "Sarcophilus laniarius"
+  ],
+  "Europe": [
+    "Dicerorhinus binagadensis",
+    "Atelerix algirus",
+    "Halichoerus grypus",
+    "Sicista caucasica"
+  ],
+  "North America": [
+    "Vulpes macrotis",
+    "Vulpes velox",
+    "Lepus alleni",
+    "Canis lycaon"
+  ],
+  "South America": [
+    "Mustela africana",
+    "Echinoprocta rufescens",
+    "Pithecia pithecia",
+    "Sapajus"
+  ]
+}
