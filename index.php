@@ -8,9 +8,9 @@ $splitedData = splitArrayWithSaveSources($twoWordNamesAnimals);
 $splicedData = spliceDataWithSaveSources($splitedData);
 
 
-foreach ($splicedData as $continent => $animalsArray) {
+foreach ($splicedData as $continent => $animalsArrayByContinent) {
     echo '<h2>', $continent, '</h2>';
-    echo '<p>', implode(', ', $animalsArray), '</p>';
+    echo '<p>', implode(', ', $animalsArrayByContinent), '</p>';
 }
 
 
