@@ -1,18 +1,39 @@
 <?php
 
 $animalsFileName = 'animals.json';
-$animalsArray = getDataFromJSON($animalsFileName);
+$continentsArray = getDataFromJSON($animalsFileName);
 
-$twoWordNamesAnimals = filterByWordsCount($animalsArray, 2);
-$splitedData = splitArrayWithSaveSources($twoWordNamesAnimals);
-$splicedData = spliceDataWithSaveSources($splitedData);
+$splitedContinents = [
+    'source' => [],
+    'data' => [],
+];
 
+foreach ($continentsArray as $continent => $animalsArray) {
+  $splitedContinents['source'][$continent] = [];
 
-foreach ($splicedData as $continent => $animalsArrayByContinent) {
-    echo '<h2>', $continent, '</h2>';
-    echo '<p>', implode(', ', $animalsArrayByContinent), '</p>';
+    foreach ($animalsArray as $animal) {
+        list($firstWord, $secondWord) = explode(' ', $animal);
+
+        if ($secondWord) {
+            $splitedContinents['source'][$continent][] = $firstWord;
+            $splitedContinents['data'][] = $secondWord;
+        }
+    }
 }
 
+shuffle($splitedContinents['data']);
+$i = 0;
+
+foreach ($splitedContinents['source'] as $continent => $firstWordsArray) {
+    echo '<h2>', $continent, '</h2>';
+    $result = [];
+
+    foreach ($firstWordsArray as $firstWord) {
+      $result[] = $firstWord . ' ' . $splitedContinents['data'][$i++];
+    }
+
+    echo '<p>', implode(', ', $result), '</p>';
+}
 
 function getDataFromJSON($fileName) {
     if (!is_file($fileName)) {
@@ -24,104 +45,4 @@ function getDataFromJSON($fileName) {
 
     $dataJSON = file_get_contents($fileName);
     return ((array) json_decode($dataJSON));
-}
-
-
-function filterByWordsCount($dataArray, $wordsCount = 1) {
-    if (gettype($dataArray) !== 'array') {
-        throw new Error('$dataArray is not array');
-    }
-
-    $result = [];
-
-    foreach ($dataArray as $dataKey => $innerArray) {
-
-        if (gettype($innerArray) !== 'array') {
-            break;
-        }
-
-        $filteredInnerArray = [];
-
-        foreach ($innerArray as $innerKey => $innerData) {
-
-            if (gettype($innerData) !== 'string') {
-                break;
-            }
-
-            $explodedData = explode(' ', $innerData);
-
-            if (count($explodedData) === $wordsCount) {
-                $filteredInnerArray[] = $innerData;
-            }
-        }
-
-        $result[$dataKey] = $filteredInnerArray;
-    }
-
-    return $result;
-}
-
-
-function splitArrayWithSaveSources($dataArray) {
-    if (gettype($dataArray) !== 'array') {
-        throw new Error('$dataArray is not array');
-    }
-
-    $result = [
-        'source' => [],
-        'data' => [],
-    ];
-
-    foreach ($dataArray as $key => $valuesArray) {
-
-        $firstWords = [];
-
-        foreach ($valuesArray as $valueString) {
-
-            list($firstWord, $secondWord) = explode(' ', $valueString);
-            $firstWords[] = $firstWord;
-            $result['data'][] = $secondWord;
-        }
-
-        $result['source'][$key] = $firstWords;
-    }
-
-    return $result;
-}
-
-
-function spliceDataWithSaveSources($dataArray) {
-    if (gettype($dataArray) !== 'array') {
-        throw new Error('$dataArray is not array');
-
-    } elseif (gettype($dataArray['source']) !== 'array') {
-        throw new Error('$dataArray[\'source\'] is not array');
-
-    } elseif (gettype($dataArray['data']) !== 'array') {
-        throw new Error('$dataArray[\'data\'] is not array');
-    }
-
-    $result = [];
-
-    $sources = $dataArray['source'];
-    $data = $dataArray['data'];
-    shuffle($data);
-
-    $iterationCounter = 0;
-
-    foreach ($sources as $key => $valuesArray) {
-
-        $splicedWords = [];
-
-        foreach ($valuesArray as $firstWord) {
-
-            $secondWord = $data[$iterationCounter];
-            $splicedWords[] = implode(' ', [$firstWord, $secondWord]);
-            $iterationCounter++;
-        }
-
-        $result[$key] = $splicedWords;
-    }
-
-    return $result;
 }
