@@ -9,12 +9,14 @@ $splitedContinents = [
 ];
 
 foreach ($continentsArray as $continent => $animalsArray) {
-  $splitedContinents['source'][$continent] = [];
+    $splitedContinents['source'][$continent] = [];
 
     foreach ($animalsArray as $animal) {
-        list($firstWord, $secondWord) = explode(' ', $animal);
+        $moreThanOneWord = substr_count($animal, ' ');
 
-        if ($secondWord) {
+        if ($moreThanOneWord) {
+            list($firstWord, $secondWord) = explode(' ', $animal);
+            
             $splitedContinents['source'][$continent][] = $firstWord;
             $splitedContinents['data'][] = $secondWord;
         }
@@ -22,14 +24,15 @@ foreach ($continentsArray as $continent => $animalsArray) {
 }
 
 shuffle($splitedContinents['data']);
-$i = 0;
 
 foreach ($splitedContinents['source'] as $continent => $firstWordsArray) {
     echo '<h2>', $continent, '</h2>';
     $result = [];
 
     foreach ($firstWordsArray as $firstWord) {
-      $result[] = $firstWord . ' ' . $splitedContinents['data'][$i++];
+      if (count($splitedContinents['data'])) {
+        $result[] = $firstWord . ' ' . array_pop($splitedContinents['data']);
+      }
     }
 
     echo '<p>', implode(', ', $result), '</p>';
